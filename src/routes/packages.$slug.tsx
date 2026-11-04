@@ -44,6 +44,9 @@ export const Route = createFileRoute("/packages/$slug")({
 
 function PackageDetail() {
   const { pkg } = Route.useLoaderData() as { pkg: import("@/lib/packages").Package };
+  const { addToCart } = useContext(CartContext);
+  const [added, setAdded] = useState(false);
+  const cleanPrice = pkg.priceFrom.replace(/[^0-9.]/g, "");
   const others = packages.filter((p) => p.slug !== pkg.slug).slice(0, 3);
 
   return (
@@ -122,6 +125,15 @@ function PackageDetail() {
                 <div className="flex justify-between"><span>Location</span><span className="font-medium text-right">{pkg.location}</span></div>
                 <div className="flex justify-between"><span>Guide</span><span className="font-medium">Dennis Juma</span></div>
               </div>
+              <button
+                onClick={() => {
+                  addToCart({ name: pkg.name, price: cleanPrice });
+                  setAdded(true);
+                }}
+                className="btn-primary mt-6 w-full"
+              >
+                {added ? "✅ Added to Cart!" : `Add to Cart - ${pkg.priceFrom}`}
+              </button>
               <Link to="/contact" search={{ tour: pkg.slug } as never} className="btn-primary mt-6 w-full">
                 Book This Tour
               </Link>
