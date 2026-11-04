@@ -1,5 +1,7 @@
+import { useContext } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { packages } from "@/lib/packages";
+import { CartContext } from "@/context/CartContext";
 
 export const Route = createFileRoute("/packages/")({
   head: () => ({
@@ -14,6 +16,8 @@ export const Route = createFileRoute("/packages/")({
 });
 
 function PackagesPage() {
+  const { addToCart } = useContext(CartContext);
+
   return (
     <>
       <section className="bg-secondary text-secondary-foreground">
@@ -29,24 +33,38 @@ function PackagesPage() {
 
       <section className="section">
         <div className="container-page grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {packages.map((p) => (
-            <Link
-              key={p.slug}
-              to="/packages/$slug"
-              params={{ slug: p.slug }}
-              className="group overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
-            >
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <img src={p.image} alt={p.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
-                <span className="absolute top-3 right-3 rounded-full bg-primary px-3 py-1 text-[11px] font-semibold text-primary-foreground">{p.priceFrom}</span>
+          {packages.map((p) => {
+            const cleanPrice = p.priceFrom.replace(/[^0-9.]/g, "");
+            return (
+              <div
+                key={p.slug}
+                className="group overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+              >
+                <Link to="/packages/$slug" params={{ slug: p.slug }}>
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <img src={p.image} alt={p.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" loading="lazy" />
+                    <span className="absolute top-3 right-3 rounded-full bg-primary px-3 py-1 text-[11px] font-semibold text-primary-foreground">{p.priceFrom}</span>
+                  </div>
+                  <div className="p-5">
+                    <h3 className="text-xl font-bold group-hover:text-primary">{p.name}</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">📍 {p.location} • {p.duration}</p>
+                    <p className="mt-3 text-sm text-foreground/80 line-clamp-2">{p.tagline}</p>
+                  </div>
+                </Link>
+                <div className="flex gap-2 px-5 pb-5">
+                  <button
+                    onClick={() => addToCart({ name: p.name, price: cleanPrice })}
+                    className="btn-primary flex-1 !py-2 text-sm"
+                  >
+                    Add to Cart
+                  </button>
+                  <Link to="/packages/$slug" params={{ slug: p.slug }} className="btn-ghost flex-1 !py-2 text-center text-sm">
+                    View Details
+                  </Link>
+                </div>
               </div>
-              <div className="p-5">
-                <h3 className="text-xl font-bold group-hover:text-primary">{p.name}</h3>
-                <p className="mt-1 text-sm text-muted-foreground">📍 {p.location} • {p.duration}</p>
-                <p className="mt-3 text-sm text-foreground/80 line-clamp-2">{p.tagline}</p>
-              </div>
-            </Link>
-          ))}
+            );
+          })}
         </div>
       </section>
     </>
