@@ -1,5 +1,7 @@
+import { useContext, useState } from "react";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { getPackage, packages } from "@/lib/packages";
+import { CartContext } from "@/context/CartContext";
 
 export const Route = createFileRoute("/packages/$slug")({
   loader: ({ params }) => {
