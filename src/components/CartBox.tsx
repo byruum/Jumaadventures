@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { CartContext } from "../context/CartContext";
 
 const MPESA_NUMBER = "0746 011 254";
-const DEPOSIT_PERCENT = 0.30; // 30% partial
+const DEPOSIT_PERCENT = 0.30;
 const PAYPAL_EMAIL = "Jumaadventuresandsafaris@gmail.com";
 
 export default function CartBox() {
@@ -124,4 +124,4 @@ export default function CartBox() {
       )}
     </div>
   );
-                  }
+}
