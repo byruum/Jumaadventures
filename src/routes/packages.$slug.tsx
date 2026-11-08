@@ -129,13 +129,15 @@ function PackageDetail() {
                 onClick={() => {
                   addToCart({ name: pkg.name, price: cleanPrice });
                   setAdded(true);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                  alert("Added to cart — now tap the 🛒 Cart button at the top and pay the 20% deposit to secure your booking.");
                 }}
                 className="btn-primary mt-6 w-full"
               >
-                {added ? "✅ Added to Cart!" : `Add to Cart - ${pkg.priceFrom}`}
+                {added ? "✅ Added to Cart — Pay Deposit in Cart ↑" : `Book This Tour — Pay 20% Deposit`}
               </button>
-              <Link to="/contact" search={{ tour: pkg.slug } as never} className="btn-primary mt-6 w-full">
-                Book This Tour
+              <Link to="/contact" search={{ tour: pkg.slug } as never} className="mt-3 block text-center text-sm underline">
+                Just enquire first, no payment yet
               </Link>
               <a href="https://wa.me/254746011254" className="mt-2 flex w-full items-center justify-center rounded-full border border-[#25D366] px-6 py-3 text-sm font-semibold text-[#128C4B] hover:bg-[#25D366]/10">
                 💬 Chat on WhatsApp
