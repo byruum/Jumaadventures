@@ -130,11 +130,11 @@ function PackageDetail() {
                   addToCart({ name: pkg.name, price: cleanPrice });
                   setAdded(true);
                   window.scrollTo({ top: 0, behavior: "smooth" });
-                  alert("Added to cart — now tap the 🛒 Cart button at the top and pay the 20% deposit to secure your booking.");
+                  alert("Added to cart — NOT booked yet. Now tap the 🛒 Cart button at the top and pay the 20% deposit to secure your booking. No payment = No booking.");
                 }}
                 className="btn-primary mt-6 w-full"
               >
-                {added ? "✅ Added to Cart — Pay Deposit in Cart ↑" : `Book This Tour — Pay 20% Deposit`}
+                {added ? "✅ Added to Cart — Pay Deposit in Cart ↑" : `Add to Cart — Then Pay 20% Deposit`}
               </button>
               <Link to="/contact" search={{ tour: pkg.slug } as never} className="mt-3 block text-center text-sm underline">
                 Just enquire first, no payment yet
