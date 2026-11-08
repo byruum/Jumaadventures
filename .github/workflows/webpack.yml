@@ -3,17 +3,20 @@ name: NodeJS with Webpack
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
     - uses: actions/checkout@v4
-    - name: List files
+    - name: Use Node.js 20.x
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20.x
+    - name: Build
       run: |
-        echo "=== ROOT ==="
-        ls -la
-        echo "=== ALL FOLDERS ==="
-        find . -maxdepth 3 -type f -name "package.json" | head -20
-        echo "=== FOLDERS ==="
-        ls -R | head -100
+        npm install
+        npm run build
