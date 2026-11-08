@@ -73,15 +73,14 @@ export default function CartBox() {
                   <a href={`https://wa.me/254746011254?text=${message}`} target="_blank" className="btn-primary flex-1 text-center">
                     Enquire on WhatsApp
                   </a>
-                  {/* FIX: This button now OPENS payment options, it does NOT confirm */}
-                  <button onClick={() => setShowPayment(true)} className="btn-ghost">
-                    Confirm Booking
+                  <button onClick={() => setShowPayment(true)} className="btn-primary flex-1">
+                    Pay 20% Deposit →
                   </button>
                 </div>
               ) : (
                 <div className="mt-3 rounded-xl bg-muted/50 p-3">
-                  <h4 className="font-bold text-sm">Confirm Booking — Choose Payment</h4>
-                  <p className="text-xs text-muted-foreground mt-1">A booking is only confirmed after payment. Choose Full or 20% Deposit.</p>
+                  <h4 className="font-bold text-sm">Choose Payment — No booking until you pay</h4>
+                  <p className="text-xs text-muted-foreground mt-1">Your booking is only confirmed after payment. Choose Full or 20% Deposit.</p>
 
                   <div className="mt-2 grid grid-cols-2 gap-2">
                     <button onClick={() => setPayType("full")} className={`rounded-xl border p-2 text-sm font-semibold ${payType === "full" ? "border-primary bg-primary text-white" : "bg-white"}`}>
@@ -97,12 +96,11 @@ export default function CartBox() {
                     <p className="mt-1 text-xs text-muted-foreground">Secure payment. You don't need a PayPal account. On PayPal page choose "Pay with Debit / Credit Card".</p>
                     <p className="mt-2">Amount to pay now: <b>${amountToPay}</b></p>
                     <a href={paypalUrl} target="_blank" rel="noreferrer" className="mt-2 block rounded-full bg-[#0070BA] py-2.5 text-center font-bold text-white">
-                      Pay ${amountToPay} with PayPal / Card
+                      Pay ${amountToPay} with PayPal / Card →
                     </a>
-                    <p className="mt-2 text-[11px] text-center text-muted-foreground">Your booking will be confirmed automatically after PayPal confirms payment. No payment = No confirmed booking.</p>
+                    <p className="mt-2 text-[11px] text-center text-muted-foreground">Your booking will be confirmed only after PayPal confirms payment. No payment = No booking.</p>
                   </div>
 
-                  {/* REMOVED: "I Have Paid" fake button. No booking without real payment. */}
                   <button onClick={() => setShowPayment(false)} className="mt-2 w-full text-center text-sm underline">Back</button>
                 </div>
               )}
