@@ -13,18 +13,12 @@ jobs:
       run:
         working-directory: ./Jumaadventures
 
-    strategy:
-      matrix:
-        node-version: [20.x]
-
     steps:
     - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js 20.x
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-        cache-dependency-path: Jumaadventures/package-lock.json
+        node-version: 20.x
     - name: Build
       run: |
         npm install
