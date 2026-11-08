@@ -9,11 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Use Node.js 20.x
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20.x
-    - name: Build
+    - name: DEBUG - what does checkout actually see?
       run: |
-        npm install
-        npm run build
+        echo "=== BRANCH / COMMIT ==="
+        git branch --show-current
+        git log --oneline -5
+        echo "=== FILES IN GIT ==="
+        git ls-files | head -50
+        echo "=== FILES ON DISK ==="
+        ls -la
+        echo "=== PACKAGE.JSON? ==="
+        ls -la package.json || echo "MISSING ON DISK"
+        cat package.json | head -5 || echo "CANNOT READ"
