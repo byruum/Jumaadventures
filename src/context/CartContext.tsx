@@ -33,9 +33,12 @@ export function CartProvider({ children }: {children: ReactNode}) {
     setCart((p)=> [...p, {id:Date.now(), travelers:1, date:'', ...item}])
   }
   const removeFromCart = (id:number) => setCart((p)=> p.filter((i)=>i.id!==id))
+
+  // FIXED: Never "Confirmed" without payment.
+  // This only creates a PENDING record. It becomes Confirmed only AFTER PayPal verifies payment in CartBox.
   const confirmBooking = () => {
     if(cart.length===0) return
-    const b:Booking = { bookingId:'JUMA-'+Date.now(), items:cart, status:'Confirmed', date:new Date().toISOString() }
+    const b:Booking = { bookingId:'JUMA-'+Date.now(), items:cart, status:'Pending Payment - Deposit Not Paid', date:new Date().toISOString() }
     setBookings(p=>[b, ...p]); setCart([]); return b.bookingId
   }
   return <CartContext.Provider value={{cart, bookings, addToCart, removeFromCart, confirmBooking}}>{children}</CartContext.Provider>
