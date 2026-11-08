@@ -45,9 +45,7 @@ function Index() {
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link to="/packages" className="btn-primary">Explore Tours</Link>
-            <Link to="/contact" className="btn-outline">Book Your Adventure</Link>
-          </div>
-
+            <Link to="/packages" className="btn-outline">Book — Pay 20% Deposit</Link></div>
           <div className="mt-14 grid max-w-2xl grid-cols-3 gap-8 border-t border-white/20 pt-6 text-white/90">
             <div>
               <div className="font-display text-3xl font-bold">10+</div>
@@ -260,7 +258,8 @@ function Index() {
             Tell us where you'd love to go — we'll craft a tour that fits your dates, budget and pace.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link to="/contact" className="btn-primary">Send Booking Request</Link>
+            <Link to="/packages" className="btn-primary">Book — Pay 20% Deposit</Link>
+            
             <a href="https://wa.me/254746011254" className="btn-outline">WhatsApp Us</a>
           </div>
         </div>
