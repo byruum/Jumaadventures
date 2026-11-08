@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { packages } from "@/lib/packages";
 import { CartContext } from "@/context/CartContext";
@@ -17,6 +17,7 @@ export const Route = createFileRoute("/packages/")({
 
 function PackagesPage() {
   const { addToCart } = useContext(CartContext);
+  const [addedSlug, setAddedSlug] = useState<string | null>(null);
 
   return (
     <>
@@ -35,6 +36,7 @@ function PackagesPage() {
         <div className="container-page grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {packages.map((p) => {
             const cleanPrice = p.priceFrom.replace(/[^0-9.]/g, "");
+            const isAdded = addedSlug === p.slug;
             return (
               <div
                 key={p.slug}
@@ -53,10 +55,15 @@ function PackagesPage() {
                 </Link>
                 <div className="flex gap-2 px-5 pb-5">
                   <button
-                    onClick={() => addToCart({ name: p.name, price: cleanPrice })}
+                    onClick={() => {
+                      addToCart({ name: p.name, price: cleanPrice });
+                      setAddedSlug(p.slug);
+                      window.scrollTo({ top: 0, behavior: "smooth" });
+                      alert("Added to cart — now tap the 🛒 Cart button at the top and pay the 20% deposit to secure your booking.");
+                    }}
                     className="btn-primary flex-1 !py-2 text-sm"
                   >
-                    Add to Cart
+                    {isAdded ? "✅ Added — Pay Deposit in Cart ↑" : "Book — Pay 20% Deposit"}
                   </button>
                   <Link to="/packages/$slug" params={{ slug: p.slug }} className="btn-ghost flex-1 !py-2 text-center text-sm">
                     View Details
