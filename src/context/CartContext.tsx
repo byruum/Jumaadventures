@@ -15,19 +15,16 @@ export const CartContext = createContext<CartCtx>({
   cart: [], bookings: [], addToCart: ()=>{}, removeFromCart: ()=>{}, confirmBooking: ()=>undefined
 })
 
-export function CartProvider({ children }: {children: ReactNode}) {
-  const [cart, setCart] = useState<CartItem[]>([])
-  const [bookings, setBookings] = useState<Booking[]>([])
+function load<T>(key: string, fallback: T): T {
+  try {
+    const v = localStorage.getItem(key)
+    return v ? JSON.parse(v) as T : fallback
+  } catch { return fallback }
+}
 
-  // Load only on client
-  useEffect(()=>{
-    try {
-      const c = localStorage.getItem('juma_cart')
-      const b = localStorage.getItem('juma_bookings')
-      if(c) setCart(JSON.parse(c))
-      if(b) setBookings(JSON.parse(b))
-    } catch {}
-  }, [])
+export function CartProvider({ children }: {children: ReactNode}) {
+  const [cart, setCart] = useState<CartItem[]>(() => load('juma_cart', []))
+  const [bookings, setBookings] = useState<Booking[]>(() => load('juma_bookings', []))
 
   useEffect(()=> { try{ localStorage.setItem('juma_cart', JSON.stringify(cart)) }catch{} }, [cart])
   useEffect(()=> { try{ localStorage.setItem('juma_bookings', JSON.stringify(bookings)) }catch{} }, [bookings])
