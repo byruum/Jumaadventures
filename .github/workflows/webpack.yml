@@ -13,6 +13,18 @@ jobs:
           fetch-depth: 0
           clean: true
 
+      - name: Debug what checkout actually got
+        run: |
+          echo "--- PWD ---"
+          pwd
+          echo "--- FILES ---"
+          ls -la
+          echo "--- BRANCH ---"
+          git branch --show-current
+          git log --oneline -5
+          echo "--- FILES IN GIT ---"
+          git ls-files | head -n 50
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20.x
